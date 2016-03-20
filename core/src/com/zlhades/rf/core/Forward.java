@@ -1,23 +1,21 @@
 package com.zlhades.rf.core;
 
-import java.io.DataInputStream;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class RequestForward {
+public class Forward {
     private static final String CLIENT_BACKEND_HTTPS = "http://127.0.0.1:8888";
-    private static RequestForward instance = new RequestForward();
+    private static Forward instance = new Forward();
 
-    public static RequestForward getInstance() {
+    public static Forward getInstance() {
 
         return instance;
     }
 
-    private RequestForward() {
+    private Forward() {
 
     }
 
@@ -25,7 +23,7 @@ public class RequestForward {
     public void forwardRequest(HttpServletRequest req) {
         HttpURLConnection conn = null;
         final String method = req.getMethod();
-        final boolean hasoutbody = (method.equals("POST"));
+        final boolean hasOutBody = (method.equals("POST"));
 
         try {
             final URL url = new URL(CLIENT_BACKEND_HTTPS // no trailing slash
@@ -46,11 +44,11 @@ public class RequestForward {
             //conn.setFollowRedirects(false);  // throws AccessDenied exception
             conn.setUseCaches(false);
             conn.setDoInput(true);
-            conn.setDoOutput(hasoutbody);
+            conn.setDoOutput(hasOutBody);
             conn.connect();
 
             final byte[] buffer = new byte[2048];
-            while (hasoutbody) {
+            while (hasOutBody) {
                 final int read = req.getInputStream().read(buffer);
                 if (read <= 0)
                     break;
