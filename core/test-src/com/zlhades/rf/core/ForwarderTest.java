@@ -1,6 +1,5 @@
 package com.zlhades.rf.core;
 
-public class ForwardTest {
-
+public class ForwarderTest {
 
 }

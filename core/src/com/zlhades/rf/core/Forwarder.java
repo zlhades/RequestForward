@@ -6,28 +6,27 @@ import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class Forward {
+public class Forwarder {
     private static final String CLIENT_BACKEND_HTTPS = "http://127.0.0.1:8888";
-    private static Forward instance = new Forward();
+    private static Forwarder instance = new Forwarder();
 
-    public static Forward getInstance() {
+    public static Forwarder getInstance() {
 
         return instance;
     }
 
-    private Forward() {
+    private Forwarder() {
 
     }
 
 
-    public void forwardRequest(HttpServletRequest req) {
+    public void forward(HttpServletRequest req) {
         HttpURLConnection conn = null;
         final String method = req.getMethod();
         final boolean hasOutBody = (method.equals("POST"));
 
         try {
-            final URL url = new URL(CLIENT_BACKEND_HTTPS // no trailing slash
-                    + req.getRequestURI() + (req.getQueryString() != null ? "?" + req.getQueryString() : ""));
+            final URL url = new URL(CLIENT_BACKEND_HTTPS + req.getRequestURI() + (req.getQueryString() != null ? "?" + req.getQueryString() : ""));
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod(method);
 
