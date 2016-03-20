@@ -12,6 +12,7 @@ public class HandlerTest implements HttpHandler {
 
         System.out.println("Get request :" + httpExchange.getRequestURI());
         OutputStream outputStream = null;
+
         try {
             httpExchange.sendResponseHeaders(200, 0L);
             outputStream = httpExchange.getResponseBody();
