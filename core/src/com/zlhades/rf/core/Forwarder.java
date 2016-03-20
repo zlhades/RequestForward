@@ -7,7 +7,8 @@ import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 
 public class Forwarder {
-    private static final String CLIENT_BACKEND_HTTPS = "http://127.0.0.1:8888";
+    public static final int BUFFER_SIZE = 2048;
+    private static String FORWARD_HTTP_PREFIX = "http://127.0.0.1:8888";
     private static Forwarder instance = new Forwarder();
 
     public static Forwarder getInstance() {
@@ -19,14 +20,14 @@ public class Forwarder {
 
     }
 
-
     public void forward(HttpServletRequest req) {
+
         HttpURLConnection conn = null;
         final String method = req.getMethod();
         final boolean hasOutBody = (method.equals("POST"));
 
         try {
-            final URL url = new URL(CLIENT_BACKEND_HTTPS + req.getRequestURI() + (req.getQueryString() != null ? "?" + req.getQueryString() : ""));
+            final URL url = new URL(buildURL(req));
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod(method);
 
@@ -46,7 +47,7 @@ public class Forwarder {
             conn.setDoOutput(hasOutBody);
             conn.connect();
 
-            final byte[] buffer = new byte[2048];
+            final byte[] buffer = new byte[BUFFER_SIZE];
             while (hasOutBody) {
                 final int read = req.getInputStream().read(buffer);
                 if (read <= 0)
@@ -55,8 +56,7 @@ public class Forwarder {
             }
 
             if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                System.out.println("erro in net work");
-
+                System.out.println("error in net work");
             }
 
         } catch (Exception e) {
@@ -67,4 +67,10 @@ public class Forwarder {
                 conn.disconnect();
         }
     }
+
+    private String buildURL(HttpServletRequest req) {
+
+        return FORWARD_HTTP_PREFIX + req.getRequestURI() + (req.getQueryString() != null ? "?" + req.getQueryString() : "");
+    }
+
 }
