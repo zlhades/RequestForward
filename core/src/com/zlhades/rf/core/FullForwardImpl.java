@@ -9,7 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class FullForwardImpl implements Forwarder{
+public class FullForwardImpl implements Forwarder {
     private static final String POST_METHOD = "POST";
     private static FullForwardImpl instance = new FullForwardImpl();
 
@@ -34,7 +34,6 @@ public class FullForwardImpl implements Forwarder{
             conn.setRequestMethod(method);
 
             Utils.getInstance().setHeader(request, conn);
-
 
             boolean hasOutBody = (method.equals(POST_METHOD));
             conn.setUseCaches(false);

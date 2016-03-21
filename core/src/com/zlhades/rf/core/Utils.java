@@ -58,5 +58,4 @@ public class Utils {
         return ForwardManger.FORWARD_HTTP_PREFIX + req.getRequestURI() + (req.getQueryString() != null ? "?" + req.getQueryString() : "");
     }
 
-
 }
