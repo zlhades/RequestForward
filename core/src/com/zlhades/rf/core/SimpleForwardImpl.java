@@ -46,5 +46,4 @@ public class SimpleForwardImpl implements Forwarder {
         return new Result(responseCode, urlString);
     }
 
-
 }
