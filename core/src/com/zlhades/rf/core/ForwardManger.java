@@ -1,20 +1,20 @@
 package com.zlhades.rf.core;
 
 import java.security.InvalidParameterException;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.ThreadPoolExecutor;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class ForwardManger {
 
-    private static final int POOL_SIZE = 20;
+    private static final int POOL_SIZE = 10;
     public static final String DEFAULT_PREFIX = "";
 
     public static String FORWARD_HTTP_PREFIX = DEFAULT_PREFIX;
 
-    private ThreadPoolExecutor pool;
+    private ExecutorService pool;
     private boolean simpleForward = false;
 
     public ForwardManger(String forwardHttpPrefix) {
@@ -24,9 +24,9 @@ public class ForwardManger {
 
     public ForwardManger(int poolSize, String forwardHttpPrefix, boolean simpleForward) {
 
-        forwardHttpPrefix = forwardHttpPrefix;
+        FORWARD_HTTP_PREFIX = forwardHttpPrefix;
         this.simpleForward = simpleForward;
-        pool = (ThreadPoolExecutor) Executors.newFixedThreadPool(poolSize);
+        pool = Executors.newFixedThreadPool(poolSize);
     }
 
     public Future<Result> forward(HttpServletRequest request) {
