@@ -2,26 +2,30 @@ package com.zlhades.rf.core;
 
 import java.util.concurrent.Callable;
 
-import javax.servlet.http.HttpServletRequest;
-
 public class ForwardTask implements Callable<Result> {
 
-    private HttpServletRequest request;
+
     private boolean simpleForward = false;
+    private String urlString;
+    private  RequestVO requestVO;
 
-    public ForwardTask(HttpServletRequest request, boolean simpleForward) {
-
-        this.request = request;
+    public ForwardTask(boolean simpleForward, String urlString) {
         this.simpleForward = simpleForward;
+        this.urlString = urlString;
     }
 
     @Override
     public Result call() throws Exception {
 
+
         if (simpleForward) {
-            return SimpleForwardImpl.getInstance().forward(request);
+            return SimpleForwarder.getInstance().forward(urlString);
         } else {
-            return FullForwardImpl.getInstance().forward(request);
+            return FullForwarder.getInstance().forward(requestVO);
         }
+    }
+
+    public void setRequestVO(RequestVO requestVO) {
+        this.requestVO = requestVO;
     }
 }

@@ -3,38 +3,34 @@ package com.zlhades.rf.core;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import javax.servlet.http.HttpServletRequest;
+public class SimpleForwarder {
 
-public class SimpleForwardImpl implements Forwarder {
+    private static final String GET_METHOD = "GET";
+    private static final int DEFAULT_HTTP_CODE = 0;
+    private static SimpleForwarder instance = new SimpleForwarder();
 
-    private static SimpleForwardImpl instance = new SimpleForwardImpl();
-
-    public static SimpleForwardImpl getInstance() {
+    public static SimpleForwarder getInstance() {
 
         return instance;
     }
 
-    private SimpleForwardImpl() {
+    private SimpleForwarder() {
 
     }
 
-    public Result forward(HttpServletRequest request) {
+    public Result forward(String urlString) {
 
         HttpURLConnection conn = null;
-        String urlString = Utils.getInstance().buildURL(request);
         int responseCode = DEFAULT_HTTP_CODE;
         try {
 
             URL url = new URL(urlString);
             conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod(request.getMethod());
-
+            conn.setRequestMethod(GET_METHOD);
             conn.setUseCaches(false);
             conn.setDoInput(true);
             conn.setDoOutput(false);
-
             conn.connect();
-
             return new Result(conn.getResponseCode(), urlString);
         } catch (Exception e) {
             e.printStackTrace();

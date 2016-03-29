@@ -38,7 +38,7 @@ public class Utils {
         }
     }
 
-    private HashMap<String, String> getHeader(HttpServletRequest req) {
+    public HashMap<String, String> getHeader(HttpServletRequest req) {
 
         HashMap<String, String> headerValue = new HashMap<>();
         final Enumeration<String> headers = req.getHeaderNames();
