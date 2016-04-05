@@ -46,19 +46,6 @@ public class FullForwarder {
             }
             HttpResponse httpResponse = httpclient.execute(method);
             responseCode = httpResponse.getStatusLine().getStatusCode();
-            //            InputStream inStream = httpResponse.getEntity().getContent();
-            //            BufferedReader reader = new BufferedReader(new InputStreamReader(inStream, "utf-8"));
-            //            StringBuilder strber = new StringBuilder();
-            //
-            //            String line = null;
-            //            while ((line = reader.readLine()) != null)
-            //                strber.append(line + "\n");
-            //            inStream.close();
-            //            if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-            //                HttpEntity entity = httpResponse.getEntity();
-            //                String charset = EntityUtils.getContentCharSet(entity);
-            //                //  response = new JSONObject(new JSONTokener(new InputStreamReader(entity.getContent(),charset)));
-            //            }
         } catch (Throwable e) {
             e.printStackTrace();
         } finally {

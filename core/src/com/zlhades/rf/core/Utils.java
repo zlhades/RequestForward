@@ -19,24 +19,6 @@ public class Utils {
         return instance;
     }
 
-    public void writePost(HttpServletRequest req, HttpURLConnection conn, boolean hasOutBody) throws IOException {
-
-        final byte[] buffer = new byte[BUFFER_SIZE];
-        while (hasOutBody) {
-            final int read = req.getInputStream().read(buffer);
-            if (read <= 0)
-                break;
-            conn.getOutputStream().write(buffer, 0, read);
-        }
-    }
-
-    public void setHeader(HttpServletRequest req, HttpURLConnection conn) {
-
-        HashMap<String, String> headerValue = getHeader(req);
-        for (Map.Entry<String, String> entity : headerValue.entrySet()) {
-            conn.addRequestProperty(entity.getKey(), entity.getValue());
-        }
-    }
 
     public HashMap<String, String> getHeader(HttpServletRequest req) {
 
