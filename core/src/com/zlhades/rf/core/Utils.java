@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 public class Utils {
 
     public static final int BUFFER_SIZE = 2048;
+    public static final String EMPTY_STRING = "";
+    public static final String DELIMITER = ",";
 
     private static Utils instance = new Utils();
 
@@ -38,6 +40,20 @@ public class Utils {
     String buildURL(HttpServletRequest req) {
 
         return ForwardManger.FORWARD_HTTP_PREFIX + req.getRequestURI() + (req.getQueryString() != null ? "?" + req.getQueryString() : "");
+    }
+
+    public String arrayToString(String[] array) {
+
+        if(array == null || array.length==0) {
+            return EMPTY_STRING;
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append(array[0]);
+        for(int i=1; i < array.length; i++) {
+            sb.append(DELIMITER);
+            sb.append(array[i]);
+        }
+        return sb.toString();
     }
 
 }

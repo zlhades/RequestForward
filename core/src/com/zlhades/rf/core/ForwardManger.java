@@ -1,6 +1,7 @@
 package com.zlhades.rf.core;
 
 import java.security.InvalidParameterException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -40,7 +41,7 @@ public class ForwardManger {
     private ForwardTask buildForwardTask(HttpServletRequest request) {
 
         Map<String, String> headers = Utils.getInstance().getHeader(request);
-        Map<String, String> parameterMap = request.getParameterMap();
+        Map<String, String> parameterMap = this.transform(request.getParameterMap());
         String urlString = Utils.getInstance().buildURL(request);
         ForwardTask task = new ForwardTask(simpleForward, urlString);
         if (simpleForward) {
@@ -49,5 +50,14 @@ public class ForwardManger {
         }
         return task;
     }
+
+    private Map<String, String> transform(Map<String, String[]> parameterMap) {
+        Map<String, String> map = new HashMap<>();
+        for (Map.Entry<String, String[]> entity : parameterMap.entrySet()) {
+            map.put(entity.getKey(), Utils.getInstance().arrayToString(entity.getValue()));
+        }
+        return map;
+    }
+
 
 }
