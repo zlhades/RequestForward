@@ -44,7 +44,7 @@ public class ForwardManger {
         Map<String, String> parameterMap = this.transform(request.getParameterMap());
         String urlString = Utils.getInstance().buildURL(request);
         ForwardTask task = new ForwardTask(simpleForward, urlString);
-        if (simpleForward) {
+        if (!simpleForward) {
             RequestVO requestVO = new RequestVO(urlString, request.getMethod(), headers, parameterMap);
             task.setRequestVO(requestVO);
         }
