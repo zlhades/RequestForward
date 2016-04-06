@@ -1,10 +1,7 @@
 package com.zlhades.rf.core;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,7 +17,6 @@ public class Utils {
 
         return instance;
     }
-
 
     public HashMap<String, String> getHeader(HttpServletRequest req) {
 
@@ -44,12 +40,12 @@ public class Utils {
 
     public String arrayToString(String[] array) {
 
-        if(array == null || array.length==0) {
+        if (array == null || array.length == 0) {
             return EMPTY_STRING;
         }
         StringBuilder sb = new StringBuilder();
         sb.append(array[0]);
-        for(int i=1; i < array.length; i++) {
+        for (int i = 1; i < array.length; i++) {
             sb.append(DELIMITER);
             sb.append(array[i]);
         }
